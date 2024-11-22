@@ -8,6 +8,7 @@ export const Header = () => {
       display="flex"
       justifyContent="space-between"
       padding={1}
+      boxShadow={3}
     >
       <Typography component="h1" variant="h4">
         Graphica

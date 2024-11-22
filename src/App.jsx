@@ -1,13 +1,15 @@
 import { Box } from "@mui/material";
 import { Header } from "./common/Header";
-import { Router } from "./Router";
+import { Setting } from "./components/setting/Setting";
+import { Graph } from "./components/graph/Graph";
 
 const App = () => {
   return (
-    <Box display="flex" flexDirection="column" minHeight="100vh">
+    <Box display="flex" flexDirection="column" height="100vh">
       <Header />
-      <Box flex={1} bgcolor="">
-        <Router />
+      <Box display="flex" flex={1} zIndex={-1}>
+        <Setting />
+        <Graph />
       </Box>
     </Box>
   );
