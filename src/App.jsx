@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { Header } from "./common/Header";
 import { Setting } from "./components/setting/Setting";
-import { Graph } from "./components/graph/Graph";
+import { Chart } from "./components/chart/Chart";
 
 const App = () => {
   return (
@@ -9,7 +9,7 @@ const App = () => {
       <Header />
       <Box display="flex" flex={1} zIndex={-1}>
         <Setting />
-        <Graph />
+        <Chart />
       </Box>
     </Box>
   );
