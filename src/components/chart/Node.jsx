@@ -1,35 +1,67 @@
-import * as d3 from "d3";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export const Node = ({ node, updateNodePosition }) => {
-  const nodeRef = useRef(null);
+export const Node = ({ node, updateNodePosition, onSelect, isSelected, r }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const handleMouseDown = useCallback(
+    (event) => {
+      setIsDragging(true);
+      setOffset({
+        x: event.clientX - node.x,
+        y: event.clientY - node.y,
+      });
+    },
+    [node.x, node.y]
+  );
+
+  const handleMouseMove = useCallback(
+    (event) => {
+      if (isDragging) {
+        updateNodePosition(
+          node.id,
+          event.clientX - offset.x,
+          event.clientY - offset.y
+        );
+      }
+    },
+    [isDragging, node.id, offset.x, offset.y, updateNodePosition]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   useEffect(() => {
-    const drag = d3
-      .drag()
-      .on("start", (event) => {
-        d3.select(event.sourceEvent.target).raise().attr("stroke", "red");
-      })
-      .on("drag", (event) => {
-        const newX = event.x;
-        const newY = event.y;
-        d3.select(nodeRef.current).attr(
-          "transform",
-          `translate(${newX},${newY})`
-        );
-        updateNodePosition(node.id, newX, newY);
-      })
-      .on("end", (event) => {
-        d3.select(event.sourceEvent.target).attr("stroke", "black");
-      });
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    } else {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    }
 
-    d3.select(nodeRef.current).call(drag);
-  }, [node, updateNodePosition]);
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
-    <g ref={nodeRef} transform={`translate(${node.x},${node.y})`}>
-      <circle r="30" fill="white" stroke="black" />
-      <text textAnchor="middle" dominantBaseline="middle">
+    <g
+      transform={`translate(${node.x},${node.y})`}
+      onClick={() => onSelect(node.id)}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      style={{ cursor: "move" }}
+    >
+      <circle r={r} fill="white" stroke={isSelected ? "red" : "black"} />
+      <text
+        textAnchor="middle"
+        dominantBaseline="middle"
+        style={{ userSelect: "none" }}
+      >
         {node.id}
       </text>
     </g>

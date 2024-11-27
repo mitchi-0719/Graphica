@@ -15,7 +15,7 @@ const App = () => {
   return (
     <Box display="flex" flexDirection="column" height="100vh">
       <Header />
-      <Box display="flex" flex={1} zIndex={-1}>
+      <Box display="flex" flex={1}>
         <Setting />
         <Chart nodes={nodes} links={links} />
       </Box>
