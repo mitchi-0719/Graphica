@@ -4,56 +4,68 @@ export const Node = ({ node, updateNodePosition, onSelect, isSelected, r }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  const handleMouseDown = useCallback(
+  const getEventCoordinates = (event) => {
+    if (event.touches) {
+      const touch = event.touches[0];
+      return { x: touch.clientX, y: touch.clientY };
+    }
+    return { x: event.clientX, y: event.clientY };
+  };
+
+  const handleStart = useCallback(
     (event) => {
+      const { x, y } = getEventCoordinates(event);
       setIsDragging(true);
       setOffset({
-        x: event.clientX - node.x,
-        y: event.clientY - node.y,
+        x: x - node.x,
+        y: y - node.y,
       });
     },
     [node.x, node.y]
   );
 
-  const handleMouseMove = useCallback(
+  const handleMove = useCallback(
     (event) => {
       if (isDragging) {
-        updateNodePosition(
-          node.id,
-          event.clientX - offset.x,
-          event.clientY - offset.y
-        );
+        const { x, y } = getEventCoordinates(event);
+        updateNodePosition(node.id, x - offset.x, y - offset.y);
       }
     },
     [isDragging, node.id, offset.x, offset.y, updateNodePosition]
   );
 
-  const handleMouseUp = useCallback(() => {
+  const handleEnd = useCallback(() => {
     setIsDragging(false);
   }, []);
 
   useEffect(() => {
+    const removeEvent = () => {
+      document.removeEventListener("mousemove", handleMove);
+      document.removeEventListener("mouseup", handleEnd);
+      document.removeEventListener("touchmove", handleMove);
+      document.removeEventListener("touchend", handleEnd);
+    };
+
     if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+      document.addEventListener("mousemove", handleMove);
+      document.addEventListener("mouseup", handleEnd);
+      document.addEventListener("touchmove", handleMove);
+      document.addEventListener("touchend", handleEnd);
     } else {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      removeEvent();
     }
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      removeEvent();
     };
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [isDragging, handleMove, handleEnd]);
 
   return (
     <g
       transform={`translate(${node.x},${node.y})`}
       onClick={() => onSelect(node.id)}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      onMouseDown={handleStart}
+      onTouchStart={handleStart}
       style={{ cursor: "move" }}
     >
       <circle r={r} fill="white" stroke={isSelected ? "red" : "black"} />
