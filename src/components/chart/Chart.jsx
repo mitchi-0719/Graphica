@@ -4,7 +4,7 @@ import { Edge } from "./Edge";
 import { Node } from "./Node";
 import { Box } from "@mui/material";
 import { useStateMap } from "../../hooks/useStateMap";
-import { useSvgSize } from "../../hooks/useSVGSize";
+import { useSvgSize } from "../../hooks/useSvgSize";
 import { useMultipleKeys } from "../../hooks/useMultipleKeys";
 
 export const Chart = ({ nodes, links }) => {
