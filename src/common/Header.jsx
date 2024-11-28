@@ -14,8 +14,12 @@ export const Header = () => {
         Graphica
       </Typography>
       <Box display="flex" gap={1}>
-        <Button variant="contained">Import</Button>
-        <Button variant="contained">Login</Button>
+        <Button variant="contained" size="small">
+          Import
+        </Button>
+        <Button variant="contained" size="small">
+          Login
+        </Button>
       </Box>
     </Box>
   );

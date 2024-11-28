@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { calcCoordinate } from "./calcCoordinate";
+import { calcCoordinate } from "../../features/calcCoordinate";
 import { Edge } from "./Edge";
 import { Node } from "./Node";
 import { Box } from "@mui/material";
-import { useStateMap } from "../../hooks/useStateMap";
-import { useSvgSize } from "../../hooks/useSvgSize";
-import { useMultipleKeys } from "../../hooks/useMultipleKeys";
+import { useStateMap, useMultipleKeys, useSvgSize } from "../../hooks";
 
 export const Chart = ({ nodes, links }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +60,7 @@ export const Chart = ({ nodes, links }) => {
   useMultipleKeys(["Delete", "Backspace"], handleDelete);
 
   return (
-    <Box width="100%">
+    <Box width="100%" height="100%">
       {!isLoading ? (
         <svg
           ref={svgRef}
