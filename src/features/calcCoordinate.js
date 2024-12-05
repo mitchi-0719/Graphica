@@ -1,8 +1,10 @@
-export const calcCoordinate = (nodes, links) => {
+import { r } from "../constants/nodeConst";
+
+export const calcCoordinate = (nodes, edges) => {
   const calcNodes = nodes.map((node) => ({
     id: node.id,
-    x: Math.random() * (470 - 30) + 30,
-    y: Math.random() * (470 - 30) + 30,
+    x: Math.random() * (470 - r) + r,
+    y: Math.random() * (470 - r) + r,
   }));
-  return { _nodes: calcNodes, _links: links };
+  return { nodes: calcNodes, edges };
 };

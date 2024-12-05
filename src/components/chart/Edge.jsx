@@ -1,11 +1,10 @@
-export const Edge = ({ link, nodes, nodesMap }) => {
+export const Edge = ({ edge, nodes, nodesMap }) => {
   return (
     <line
-      className="link"
-      x1={nodes[nodesMap[link.source]].x}
-      y1={nodes[nodesMap[link.source]].y}
-      x2={nodes[nodesMap[link.target]].x}
-      y2={nodes[nodesMap[link.target]].y}
+      x1={nodes[nodesMap[edge.source]].x}
+      y1={nodes[nodesMap[edge.source]].y}
+      x2={nodes[nodesMap[edge.target]].x}
+      y2={nodes[nodesMap[edge.target]].y}
       style={{ stroke: "black", strokeWidth: "2" }}
     />
   );

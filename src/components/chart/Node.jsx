@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import { r } from "../../constants/nodeConst";
 
-export const Node = ({ node, updateNodePosition, onSelect, isSelected, r }) => {
+export const Node = ({ node, updateNodePosition, onSelect, isSelected }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
