@@ -35,9 +35,15 @@ export const Chart = () => {
     }
     setSelectNodeId(id);
   };
-
+  const isSvgActive = () => {
+    return (
+      svgRef.current &&
+      (svgRef.current === document.activeElement ||
+        svgRef.current.contains(document.activeElement))
+    );
+  };
   const handleDelete = () => {
-    if (isNotNullOrUndefined(selectNodeId)) {
+    if (isNotNullOrUndefined(selectNodeId) && isSvgActive()) {
       deleteNode(selectNodeId);
       setSelectNodeId(null);
     }
@@ -59,8 +65,9 @@ export const Chart = () => {
         ref={svgRef}
         width="100%"
         height="100%"
+        tabIndex={0}
         onDoubleClick={handleDoubleClick}
-        style={{ clickEvent: "none" }}
+        style={{ clickEvent: "none", outline: "none" }}
       >
         {edges.map((edge, i) => (
           <Edge edge={edge} nodes={nodes} nodesMap={nodesMap} key={i} />
