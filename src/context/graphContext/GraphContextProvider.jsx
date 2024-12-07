@@ -43,14 +43,21 @@ export const GraphContextProvider = ({ children }) => {
   };
 
   const deleteNode = (id) => {
+    const deleteNodeId = isNotNullOrUndefined(id)
+      ? id
+      : nodes[nodes.length - 1].id;
     setNodes((prevNodes) =>
-      prevNodes.filter((node, i) =>
-        isNotNullOrUndefined(id) ? node.id !== id : i !== prevNodes.length - 1,
-      ),
+      prevNodes.filter((node) => node.id !== deleteNodeId),
     );
     setEdges((prevEdges) =>
-      prevEdges.filter((edge) => edge.source !== id && edge.target !== id),
+      prevEdges.filter(
+        (edge) => edge.source !== deleteNodeId && edge.target !== deleteNodeId,
+      ),
     );
+
+    if (selectNodeId === deleteNodeId) {
+      setSelectNodeId(null);
+    }
   };
 
   const addEdge = (source, target) => {
