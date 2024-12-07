@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import { Edge } from "./Edge";
 import { Node } from "./Node";
 import { Box } from "@mui/material";
@@ -8,48 +8,58 @@ import { isNotNullOrUndefined } from "../../hooks/nullOrUndefined";
 import { r } from "../../constants/nodeConst";
 
 export const Chart = () => {
-  const { nodes, edges, setNodes, deleteNode, nodesMap } =
-    useContext(GraphContext);
-  const [selectedNode, setSelectedNode] = useState(null);
+  const {
+    nodes,
+    edges,
+    addNode,
+    updateNode,
+    deleteNode,
+    selectNodeId,
+    setSelectNodeId,
+    nodesMap,
+  } = useContext(GraphContext);
   const svgRef = useRef(null);
 
   const { width: svgWidth, height: svgHeight } = useSvgSize(svgRef);
 
-  const updateNodePosition = (id, x, y) => {
-    setNodes((prevNodes) =>
-      prevNodes.map((node) => {
-        if (node.id === id) {
-          const newX = Math.min(Math.max(x, r), svgWidth - r);
-          const newY = Math.min(Math.max(y, r), svgHeight - r);
-          return { ...node, x: newX, y: newY };
-        } else {
-          return node;
-        }
-      })
-    );
+  const moveNode = (id, x, y) => {
+    const newX = Math.min(Math.max(x, r), svgWidth - r);
+    const newY = Math.min(Math.max(y, r), svgHeight - r);
+    updateNode(id, { x: newX, y: newY });
   };
 
   const handleNodeSelect = (id) => {
-    if (selectedNode === id) {
-      setSelectedNode(null);
+    if (selectNodeId === id) {
+      setSelectNodeId(null);
       return;
     }
-    setSelectedNode(id);
+    setSelectNodeId(id);
   };
 
   const handleDelete = () => {
-    if (isNotNullOrUndefined(selectedNode)) {
-      deleteNode(selectedNode);
-      setSelectedNode(null);
+    if (isNotNullOrUndefined(selectNodeId)) {
+      deleteNode(selectNodeId);
+      setSelectNodeId(null);
     }
   };
   useMultipleKeys(["Delete", "Backspace"], handleDelete);
+
+  const handleDoubleClick = (e) => {
+    const { clientX, clientY } = e;
+    const svgRect = svgRef.current.getBoundingClientRect();
+    const svgX = clientX - svgRect.left;
+    const svgY = clientY - svgRect.top;
+
+    addNode(svgX, svgY);
+  };
+
   return (
     <Box width="100%" height="100%">
       <svg
         ref={svgRef}
         width="100%"
         height="100%"
+        onDoubleClick={handleDoubleClick}
         style={{ clickEvent: "none" }}
       >
         {edges.map((edge, i) => (
@@ -59,9 +69,9 @@ export const Chart = () => {
           <Node
             node={node}
             key={i}
-            updateNodePosition={updateNodePosition}
+            moveNode={moveNode}
             onSelect={handleNodeSelect}
-            isSelected={selectedNode === node.id}
+            isSelected={selectNodeId === node.id}
           />
         ))}
       </svg>

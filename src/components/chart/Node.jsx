@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { r } from "../../constants/nodeConst";
 
-export const Node = ({ node, updateNodePosition, onSelect, isSelected }) => {
+export const Node = ({ node, moveNode, onSelect, isSelected }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -29,10 +29,10 @@ export const Node = ({ node, updateNodePosition, onSelect, isSelected }) => {
     (event) => {
       if (isDragging) {
         const { x, y } = getEventCoordinates(event);
-        updateNodePosition(node.id, x - offset.x, y - offset.y);
+        moveNode(node.id, x - offset.x, y - offset.y);
       }
     },
-    [isDragging, node.id, offset.x, offset.y, updateNodePosition]
+    [isDragging, node.id, offset.x, offset.y, moveNode]
   );
 
   const handleEnd = useCallback(() => {
@@ -69,13 +69,18 @@ export const Node = ({ node, updateNodePosition, onSelect, isSelected }) => {
       onTouchStart={handleStart}
       style={{ cursor: "move" }}
     >
-      <circle r={r} fill="white" stroke={isSelected ? "red" : "black"} />
+      <circle
+        r={r}
+        fill="white"
+        stroke={node?.color ?? "black"}
+        strokeWidth={isSelected ? 3 : 1}
+      />
       <text
         textAnchor="middle"
         dominantBaseline="middle"
         style={{ userSelect: "none" }}
       >
-        {node.id}
+        {node.label ?? ""}
       </text>
     </g>
   );
