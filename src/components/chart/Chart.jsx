@@ -16,6 +16,8 @@ export const Chart = () => {
     deleteNode,
     selectNodeId,
     setSelectNodeId,
+    selectEdgeId,
+    setSelectEdgeId,
     nodesMap,
   } = useContext(GraphContext);
   const svgRef = useRef(null);
@@ -35,6 +37,15 @@ export const Chart = () => {
     }
     setSelectNodeId(id);
   };
+
+  const handleEdgeSelect = (id) => {
+    if (selectEdgeId === id) {
+      setSelectEdgeId(null);
+      return;
+    }
+    setSelectEdgeId(id);
+  };
+
   const isSvgActive = () => {
     return (
       svgRef.current &&
@@ -56,7 +67,7 @@ export const Chart = () => {
     const svgX = clientX - svgRect.left;
     const svgY = clientY - svgRect.top;
 
-    addNode(svgX, svgY);
+    addNode({ x: svgX, y: svgY });
   };
 
   return (
@@ -70,7 +81,14 @@ export const Chart = () => {
         style={{ clickEvent: "none", outline: "none" }}
       >
         {edges.map((edge, i) => (
-          <Edge edge={edge} nodes={nodes} nodesMap={nodesMap} key={i} />
+          <Edge
+            key={i}
+            edge={edge}
+            nodes={nodes}
+            nodesMap={nodesMap}
+            onSelect={handleEdgeSelect}
+            isSelected={selectEdgeId === edge.id}
+          />
         ))}
         {nodes.map((node, i) => (
           <Node

@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { isNotNullOrUndefined } from "./nullOrUndefined";
 
 export const useStateMap = (initialState) => {
   const [state, setState] = useState(initialState);
@@ -6,7 +7,7 @@ export const useStateMap = (initialState) => {
     // TODO ここがめっちゃレンダリングされてる。対策できるならしたい
     const obj = {};
     state.forEach((v, i) => {
-      if (v.id) {
+      if (isNotNullOrUndefined(v.id)) {
         obj[v.id] = i;
       }
     });

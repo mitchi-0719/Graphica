@@ -5,6 +5,7 @@ import { GraphContext } from "../../context/graphContext/GraphContext";
 import { useContext } from "react";
 import { LabelChangeField } from "./LabelChangeField";
 import { ColorPalette } from "./ColorPalette";
+import { OperateEdgeButton } from "./OperateEdgeButton";
 
 export const Setting = () => {
   const { nodes, addNode, deleteNode } = useContext(GraphContext);
@@ -23,7 +24,7 @@ export const Setting = () => {
     <Box
       display="flex"
       flexDirection="column"
-      width={isSmallDevice ? "100%" : "200px"}
+      width={isSmallDevice ? "100%" : "400px"}
       border="1px solid black"
       boxShadow={3}
       padding={2}
@@ -40,6 +41,7 @@ export const Setting = () => {
       </Box>
       <LabelChangeField />
       <ColorPalette />
+      <OperateEdgeButton />
     </Box>
   );
 };
