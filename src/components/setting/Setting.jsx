@@ -12,7 +12,7 @@ export const Setting = () => {
   const isSmallDevice = useIsSmallDevice();
 
   const handlePlusClick = () => {
-    addNode();
+    addNode({});
   };
 
   const handleMinusClick = () => {

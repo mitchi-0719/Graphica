@@ -65,7 +65,6 @@ export const GraphContextProvider = ({ children }) => {
   };
 
   const addEdge = ({ source, target, label, weight, color }) => {
-    console.log(source, target);
     if (isNotNullOrUndefined(source) && isNotNullOrUndefined(target)) {
       setEdges((prevEdges) => [
         ...prevEdges,
