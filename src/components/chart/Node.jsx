@@ -73,7 +73,7 @@ export const Node = ({ node, moveNode, onSelect, isSelected }) => {
         r={r}
         fill="white"
         stroke={node?.color ?? "black"}
-        strokeWidth={isSelected ? 3 : 1}
+        strokeWidth={isSelected ? 5 : 3}
       />
       <text
         textAnchor="middle"
