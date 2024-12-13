@@ -2,7 +2,6 @@ import { useState } from "react";
 import { GraphContext } from "./GraphContext";
 import { useStateMap } from "../../hooks";
 import { isNotNullOrUndefined } from "../../hooks/nullOrUndefined";
-import { r } from "../../constants/nodeConst";
 
 export const GraphContextProvider = ({ children }) => {
   const [nodes, setNodes, nodesMap] = useStateMap([]);
@@ -13,16 +12,23 @@ export const GraphContextProvider = ({ children }) => {
 
   const [selectNodeId, setSelectNodeId] = useState(null);
   const [selectEdgeId, setSelectEdgeId] = useState(null);
+  const defaultR = 30;
 
-  const addNode = ({ x, y, color, label }) => {
-    const newX = isNotNullOrUndefined(x) ? x : Math.random() * (470 - r) + r;
-    const newY = isNotNullOrUndefined(y) ? y : Math.random() * (470 - r) + r;
+  const addNode = ({ x, y, r, color, label }) => {
+    const newX = isNotNullOrUndefined(x)
+      ? x
+      : Math.random() * (470 - defaultR) + defaultR;
+    const newY = isNotNullOrUndefined(y)
+      ? y
+      : Math.random() * (470 - defaultR) + defaultR;
+    const newR = isNotNullOrUndefined(r) ? r : defaultR;
     setNodes((prevNodes) => [
       ...prevNodes,
       {
         id: nodeId,
         x: newX,
         y: newY,
+        r: newR,
         color: color ?? "black",
         label: label ?? `${nodeId}`,
       },
@@ -30,7 +36,7 @@ export const GraphContextProvider = ({ children }) => {
     setNodeIdId((prevId) => prevId + 1);
   };
 
-  const updateNode = (id, { x, y, color, label }) => {
+  const updateNode = (id, { x, y, r, color, label }) => {
     setNodes((prevNodes) =>
       prevNodes.map((node) =>
         node.id === id
@@ -38,6 +44,7 @@ export const GraphContextProvider = ({ children }) => {
               ...node,
               x: isNotNullOrUndefined(x) ? x : node.x,
               y: isNotNullOrUndefined(y) ? y : node.y,
+              r: isNotNullOrUndefined(r) ? r : node.r,
               color: isNotNullOrUndefined(color) ? color : node.color,
               label: isNotNullOrUndefined(label) ? label : node.label,
             }

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { r } from "../../../constants/nodeConst";
 
 export const Node = ({
   node,
@@ -35,7 +34,7 @@ export const Node = ({
     (event) => {
       if (isDragging) {
         const { x, y } = getEventCoordinates(event);
-        moveNode(node.id, x - offset.x, y - offset.y);
+        moveNode(node.id, x - offset.x, y - offset.y, node.r);
       }
     },
     [isDragging, node.id, offset.x, offset.y, moveNode],
@@ -77,7 +76,7 @@ export const Node = ({
       style={{ cursor: "move" }}
     >
       <circle
-        r={r}
+        r={node.r}
         fill="white"
         stroke={node?.color ?? "black"}
         strokeWidth={isSelected ? 5 : 3}

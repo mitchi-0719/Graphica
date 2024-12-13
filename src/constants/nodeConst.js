@@ -1,4 +1,3 @@
-export const r = 30;
 export const defaultColor = [
   "black",
   "red",
