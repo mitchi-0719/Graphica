@@ -5,7 +5,6 @@ import { Box } from "@mui/material";
 import { useMultipleKeys, useSvgSize } from "../../hooks";
 import { GraphContext } from "../../context/graphContext/GraphContext";
 import { isNotNullOrUndefined } from "../../hooks/nullOrUndefined";
-import { r } from "../../constants/nodeConst";
 import { NodeMenu } from "./Node/NodeMenu";
 
 export const Chart = () => {
@@ -28,7 +27,7 @@ export const Chart = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [sideMenuPosition, setSideMenuPosition] = useState({ x: 0, y: 0 });
 
-  const moveNode = (id, x, y) => {
+  const moveNode = (id, x, y, r) => {
     const newX = Math.min(Math.max(x, r), svgWidth - r);
     const newY = Math.min(Math.max(y, r), svgHeight - r);
     updateNode(id, { x: newX, y: newY });
