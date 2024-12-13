@@ -37,7 +37,7 @@ export const Node = ({
         moveNode(node.id, x - offset.x, y - offset.y, node.r);
       }
     },
-    [isDragging, node.id, offset.x, offset.y, moveNode],
+    [isDragging, node.id, offset.x, offset.y, moveNode, node.r],
   );
 
   const handleEnd = useCallback(() => {
