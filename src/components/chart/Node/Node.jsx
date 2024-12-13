@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { r } from "../../constants/nodeConst";
+import { r } from "../../../constants/nodeConst";
 
-export const Node = ({ node, moveNode, onSelect, isSelected }) => {
+export const Node = ({
+  node,
+  moveNode,
+  onSelect,
+  isSelected,
+  handleRightClick,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -22,7 +28,7 @@ export const Node = ({ node, moveNode, onSelect, isSelected }) => {
         y: y - node.y,
       });
     },
-    [node.x, node.y]
+    [node.x, node.y],
   );
 
   const handleMove = useCallback(
@@ -32,7 +38,7 @@ export const Node = ({ node, moveNode, onSelect, isSelected }) => {
         moveNode(node.id, x - offset.x, y - offset.y);
       }
     },
-    [isDragging, node.id, offset.x, offset.y, moveNode]
+    [isDragging, node.id, offset.x, offset.y, moveNode],
   );
 
   const handleEnd = useCallback(() => {
@@ -67,6 +73,7 @@ export const Node = ({ node, moveNode, onSelect, isSelected }) => {
       onClick={() => onSelect(node.id)}
       onMouseDown={handleStart}
       onTouchStart={handleStart}
+      onContextMenu={(e) => handleRightClick(e, node.id)}
       style={{ cursor: "move" }}
     >
       <circle

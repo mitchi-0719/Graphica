@@ -1,11 +1,12 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import { Edge } from "./Edge";
-import { Node } from "./Node";
+import { Node } from "./Node/Node";
 import { Box } from "@mui/material";
 import { useMultipleKeys, useSvgSize } from "../../hooks";
 import { GraphContext } from "../../context/graphContext/GraphContext";
 import { isNotNullOrUndefined } from "../../hooks/nullOrUndefined";
 import { r } from "../../constants/nodeConst";
+import { NodeMenu } from "./Node/NodeMenu";
 
 export const Chart = () => {
   const {
@@ -20,9 +21,12 @@ export const Chart = () => {
     setSelectEdgeId,
     nodesMap,
   } = useContext(GraphContext);
-  const svgRef = useRef(null);
 
+  const svgRef = useRef(null);
   const { width: svgWidth, height: svgHeight } = useSvgSize(svgRef);
+
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [sideMenuPosition, setSideMenuPosition] = useState({ x: 0, y: 0 });
 
   const moveNode = (id, x, y) => {
     const newX = Math.min(Math.max(x, r), svgWidth - r);
@@ -53,12 +57,15 @@ export const Chart = () => {
         svgRef.current.contains(document.activeElement))
     );
   };
+
   const handleDelete = () => {
     if (isNotNullOrUndefined(selectNodeId) && isSvgActive()) {
       deleteNode(selectNodeId);
       setSelectNodeId(null);
+      closeSideMenu();
     }
   };
+
   useMultipleKeys(["Delete", "Backspace"], handleDelete);
 
   const handleDoubleClick = (e) => {
@@ -68,6 +75,35 @@ export const Chart = () => {
     const svgY = clientY - svgRect.top;
 
     addNode({ x: svgX, y: svgY });
+  };
+
+  const handleRightClick = (e, id) => {
+    e.preventDefault();
+    const { clientX, clientY } = e;
+    setSideMenuPosition({ x: clientX, y: clientY });
+    setSidebarVisible(true);
+    setSelectNodeId(id);
+  };
+
+  useEffect(() => {
+    const handleActionOutside = () => {
+      if (sidebarVisible) {
+        setSidebarVisible(false);
+      }
+    };
+    document.addEventListener("click", handleActionOutside);
+    document.addEventListener("mousedown", handleActionOutside);
+    document.addEventListener("keydown", handleActionOutside);
+
+    return () => {
+      document.removeEventListener("click", handleActionOutside);
+      document.removeEventListener("mousedown", handleActionOutside);
+      document.removeEventListener("keydown", handleActionOutside);
+    };
+  }, [sidebarVisible]);
+
+  const closeSideMenu = () => {
+    setSidebarVisible(false);
   };
 
   return (
@@ -97,9 +133,16 @@ export const Chart = () => {
             moveNode={moveNode}
             onSelect={handleNodeSelect}
             isSelected={selectNodeId === node.id}
+            handleRightClick={handleRightClick}
           />
         ))}
       </svg>
+
+      <NodeMenu
+        isOpen={sidebarVisible}
+        sideMenuPosition={sideMenuPosition}
+        handleSideMenuClose={closeSideMenu}
+      />
     </Box>
   );
 };
