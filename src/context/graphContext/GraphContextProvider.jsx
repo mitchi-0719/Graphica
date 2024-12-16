@@ -7,14 +7,15 @@ export const GraphContextProvider = ({ children }) => {
   const [nodes, setNodes, nodesMap] = useStateMap([]);
   const [edges, setEdges] = useState([]);
 
-  const [nodeId, setNodeIdId] = useState(0);
+  const [nodeId, setNodeId] = useState(0);
   const [edgeId, setEdgeId] = useState(0);
 
   const [selectNodeId, setSelectNodeId] = useState(null);
   const [selectEdgeId, setSelectEdgeId] = useState(null);
   const defaultR = 30;
 
-  const addNode = ({ x, y, r, color, label }) => {
+  const addNode = ({ id, x, y, r, color, label }) => {
+    const newId = isNotNullOrUndefined(id) ? id : nodeId;
     const newX = isNotNullOrUndefined(x)
       ? x
       : Math.random() * (470 - defaultR) + defaultR;
@@ -25,7 +26,7 @@ export const GraphContextProvider = ({ children }) => {
     setNodes((prevNodes) => [
       ...prevNodes,
       {
-        id: nodeId,
+        id: newId,
         x: newX,
         y: newY,
         r: newR,
@@ -33,7 +34,9 @@ export const GraphContextProvider = ({ children }) => {
         label: label ?? `${nodeId}`,
       },
     ]);
-    setNodeIdId((prevId) => prevId + 1);
+    const prevNodeId = nodeId;
+    setNodeId((prevId) => prevId + 1);
+    return prevNodeId;
   };
 
   const updateNode = (id, { x, y, r, color, label }) => {
@@ -69,6 +72,12 @@ export const GraphContextProvider = ({ children }) => {
     if (selectNodeId === deleteNodeId) {
       setSelectNodeId(null);
     }
+  };
+
+  const clearNode = () => {
+    setNodes([]);
+    setNodeId(0);
+    setSelectNodeId(null);
   };
 
   const addEdge = ({ source, target, label, weight, color }) => {
@@ -111,8 +120,16 @@ export const GraphContextProvider = ({ children }) => {
     }
   };
 
+  const clearEdge = () => {
+    setEdges([]);
+    setEdgeId(0);
+    setSelectEdgeId(null);
+  };
+
   const contextValue = {
     // ノード関連
+    nodeId,
+    setNodeId,
     nodes,
     setNodes,
     addNode,
@@ -120,6 +137,7 @@ export const GraphContextProvider = ({ children }) => {
     deleteNode,
     selectNodeId,
     setSelectNodeId,
+    clearNode,
     // エッジ関連
     edges,
     setEdges,
@@ -128,6 +146,7 @@ export const GraphContextProvider = ({ children }) => {
     deleteEdge,
     selectEdgeId,
     setSelectEdgeId,
+    clearEdge,
     // その他
     nodesMap,
   };
