@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
+import { GraphExportButton } from "../components/export/GraphExportButton";
 
 export const Header = () => {
   return (
@@ -17,6 +18,7 @@ export const Header = () => {
         <Button variant="contained" size="small">
           Import
         </Button>
+        <GraphExportButton />
         <Button variant="contained" size="small">
           Login
         </Button>
