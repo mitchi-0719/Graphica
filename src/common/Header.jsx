@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { GraphExportButton } from "../components/export/GraphExportButton";
+import { GraphImportButton } from "../components/import/GraphImportButton";
 
 export const Header = () => {
   return (
@@ -15,9 +16,7 @@ export const Header = () => {
         Graphica
       </Typography>
       <Box display="flex" gap={1}>
-        <Button variant="contained" size="small">
-          Import
-        </Button>
+        <GraphImportButton />
         <GraphExportButton />
         <Button variant="contained" size="small">
           Login

@@ -4,6 +4,7 @@ import { Setting } from "./components/setting/Setting";
 import { Chart } from "./components/chart/Chart";
 import { useIsSmallDevice } from "./hooks/Responsive";
 import { Provider } from "./provider/Provider";
+import { GraphImportDialog } from "./components/import/GraphImportDialog";
 
 const App = () => {
   const isSmallDevice = useIsSmallDevice();
@@ -23,6 +24,7 @@ const App = () => {
             <Chart />
           </Box>
         )}
+        <GraphImportDialog />
       </Box>
     </Provider>
   );
