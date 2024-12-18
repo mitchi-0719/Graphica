@@ -1,11 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { useIsSmallDevice } from "../../hooks/Responsive";
-import { ToggleButton } from "./ToggleButton";
 import { GraphContext } from "../../context/graphContext/GraphContext";
 import { useContext } from "react";
 import { LabelChangeField } from "./LabelChangeField";
 import { ColorPalette } from "./ColorPalette";
 import { OperateEdgeButton } from "./OperateEdgeButton";
+import { OperateNodeButton } from "./OperateNodeButton";
+import { ModeToggleButton } from "./ModeToggleButton";
 
 export const Setting = () => {
   const { nodes, addNode, deleteNode } = useContext(GraphContext);
@@ -33,7 +34,7 @@ export const Setting = () => {
     >
       <Box>
         <Typography variant="h7">ノードの追加削除</Typography>
-        <ToggleButton
+        <OperateNodeButton
           onPlusChange={handlePlusClick}
           onMinusChange={handleMinusClick}
           value={nodes.length}
@@ -42,6 +43,7 @@ export const Setting = () => {
       <LabelChangeField />
       <ColorPalette />
       <OperateEdgeButton />
+      <ModeToggleButton />
     </Box>
   );
 };

@@ -1,7 +1,7 @@
 import { AddCircle, DoDisturbOn } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 
-export const ToggleButton = ({ value, onPlusChange, onMinusChange }) => {
+export const OperateNodeButton = ({ value, onPlusChange, onMinusChange }) => {
   return (
     <Box display="flex" padding={1}>
       <Button onClick={onMinusChange} variant="contained" size="small">
