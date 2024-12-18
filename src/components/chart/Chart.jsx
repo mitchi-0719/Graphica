@@ -16,9 +16,11 @@ export const Chart = () => {
     deleteNode,
     selectNodeId,
     setSelectNodeId,
+    addEdge,
     selectEdgeId,
     setSelectEdgeId,
     nodesMap,
+    isDrawEdgeMode,
   } = useContext(GraphContext);
 
   const svgRef = useRef(null);
@@ -33,12 +35,20 @@ export const Chart = () => {
     updateNode(id, { x: newX, y: newY });
   };
 
-  const handleNodeSelect = (id) => {
+  const handleNodeClick = (id) => {
     if (selectNodeId === id) {
       setSelectNodeId(null);
       return;
     }
-    setSelectNodeId(id);
+    if (isDrawEdgeMode) {
+      if (isNotNullOrUndefined(selectNodeId)) {
+        addEdge({ source: selectNodeId, target: id });
+      } else {
+        setSelectNodeId(id);
+      }
+    } else {
+      setSelectNodeId(id);
+    }
   };
 
   const handleEdgeSelect = (id) => {
@@ -130,7 +140,7 @@ export const Chart = () => {
             node={node}
             key={i}
             moveNode={moveNode}
-            onSelect={handleNodeSelect}
+            onSelect={handleNodeClick}
             isSelected={selectNodeId === node.id}
             handleRightClick={handleRightClick}
           />

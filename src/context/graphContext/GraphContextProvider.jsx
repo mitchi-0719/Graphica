@@ -12,6 +12,8 @@ export const GraphContextProvider = ({ children }) => {
 
   const [selectNodeId, setSelectNodeId] = useState(null);
   const [selectEdgeId, setSelectEdgeId] = useState(null);
+
+  const [isDrawEdgeMode, setIsDrawEdgeMode] = useState(false);
   const defaultR = 30;
 
   const addNode = ({ id, x, y, r, color, label }) => {
@@ -149,6 +151,8 @@ export const GraphContextProvider = ({ children }) => {
     clearEdge,
     // その他
     nodesMap,
+    isDrawEdgeMode,
+    setIsDrawEdgeMode,
   };
 
   return (
