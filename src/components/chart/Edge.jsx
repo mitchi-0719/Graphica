@@ -1,6 +1,7 @@
 export const Edge = ({ edge, nodes, nodesMap, onSelect, isSelected }) => {
   return (
     <line
+      cursor="pointer"
       onClick={() => onSelect(edge.id)}
       x1={nodes[nodesMap[edge.source]].x}
       y1={nodes[nodesMap[edge.source]].y}
