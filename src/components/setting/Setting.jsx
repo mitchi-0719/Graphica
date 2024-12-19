@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useIsSmallDevice } from "../../hooks/Responsive";
 import { GraphContext } from "../../context/graphContext/GraphContext";
 import { useContext } from "react";
@@ -7,9 +7,11 @@ import { ColorPalette } from "./ColorPalette";
 import { OperateEdgeButton } from "./OperateEdgeButton";
 import { OperateNodeButton } from "./OperateNodeButton";
 import { ModeToggleButton } from "./ModeToggleButton";
+import { isNullOrUndefined } from "../../hooks/nullOrUndefined";
 
 export const Setting = () => {
-  const { nodes, addNode, deleteNode } = useContext(GraphContext);
+  const { nodes, addNode, deleteNode, selectEdgeId, subdivision, contraction } =
+    useContext(GraphContext);
   const isSmallDevice = useIsSmallDevice();
 
   const handlePlusClick = () => {
@@ -44,6 +46,25 @@ export const Setting = () => {
       <ColorPalette />
       <OperateEdgeButton />
       <ModeToggleButton />
+      <Box>
+        <Typography variant="h7">グラフの操作</Typography>
+        <Box display="flex" justifyContent="space-around">
+          <Button
+            onClick={subdivision}
+            variant="contained"
+            disabled={isNullOrUndefined(selectEdgeId)}
+          >
+            細分
+          </Button>
+          <Button
+            onClick={contraction}
+            variant="contained"
+            disabled={isNullOrUndefined(selectEdgeId)}
+          >
+            縮約
+          </Button>
+        </Box>
+      </Box>
     </Box>
   );
 };
