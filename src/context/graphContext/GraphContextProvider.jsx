@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { GraphContext } from "./GraphContext";
 import { useStateMap } from "../../hooks";
-import { isNotNullOrUndefined } from "../../hooks/nullOrUndefined";
+import {
+  isNotNullOrUndefined,
+  isNullOrUndefined,
+} from "../../hooks/nullOrUndefined";
 
 export const GraphContextProvider = ({ children }) => {
   const [nodes, setNodes, nodesMap] = useStateMap([]);
@@ -128,6 +131,46 @@ export const GraphContextProvider = ({ children }) => {
     setSelectEdgeId(null);
   };
 
+  const subdivision = () => {
+    if (isNullOrUndefined(selectEdgeId)) {
+      return;
+    }
+    const edge = edges.find((edge) => edge.id === selectEdgeId);
+    const sourceNode = nodes[nodesMap[edge.source]];
+    const targetNode = nodes[nodesMap[edge.target]];
+    const x = (sourceNode.x + targetNode.x) / 2;
+    const y = (sourceNode.y + targetNode.y) / 2;
+
+    const newNodeId = addNode({ x, y });
+    addEdge({ source: edge.source, target: newNodeId });
+    addEdge({ source: newNodeId, target: edge.target });
+    deleteEdge(selectEdgeId);
+  };
+
+  const contraction = () => {
+    if (isNullOrUndefined(selectEdgeId)) {
+      return;
+    }
+    const edge = edges.find((edge) => edge.id === selectEdgeId);
+    const sourceNode = nodes[nodesMap[edge.source]];
+    const targetNode = nodes[nodesMap[edge.target]];
+    const x = (sourceNode.x + targetNode.x) / 2;
+    const y = (sourceNode.y + targetNode.y) / 2;
+
+    updateNode(sourceNode.id, { x, y });
+    for (const edge of edges) {
+      if (edge.source === targetNode.id) {
+        updateEdge(edge.id, { source: sourceNode.id });
+      }
+      if (edge.target === targetNode.id) {
+        updateEdge(edge.id, { target: sourceNode.id });
+      }
+    }
+
+    deleteNode(targetNode.id);
+    deleteEdge(selectEdgeId);
+  };
+
   const contextValue = {
     // ノード関連
     nodeId,
@@ -153,6 +196,8 @@ export const GraphContextProvider = ({ children }) => {
     nodesMap,
     isDrawEdgeMode,
     setIsDrawEdgeMode,
+    subdivision,
+    contraction,
   };
 
   return (
