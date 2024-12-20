@@ -68,10 +68,12 @@ export const Chart = () => {
   };
 
   const handleDelete = () => {
+    console.log(1);
     if (isNotNullOrUndefined(selectNodeId) && isSvgActive()) {
       deleteNode(selectNodeId);
       setSelectNodeId(null);
       closeSideMenu();
+      console.log(2);
     }
   };
 
@@ -151,6 +153,7 @@ export const Chart = () => {
         isOpen={sidebarVisible}
         sideMenuPosition={sideMenuPosition}
         handleSideMenuClose={closeSideMenu}
+        handleSideMenuDelete={handleDelete}
       />
     </Box>
   );

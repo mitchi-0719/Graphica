@@ -1,6 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 
-export const NodeMenu = ({ isOpen, sideMenuPosition, handleSideMenuClose }) => {
+export const NodeMenu = ({
+  isOpen,
+  sideMenuPosition,
+  handleSideMenuClose,
+  handleSideMenuDelete,
+}) => {
   if (!isOpen) return null;
   return (
     <Box
@@ -19,6 +24,7 @@ export const NodeMenu = ({ isOpen, sideMenuPosition, handleSideMenuClose }) => {
           Menu
         </Typography>
         {/* ここの下に内容を書く */}
+        <Button onClick={handleSideMenuDelete}>ノードの消去</Button>
         <Box>
           <Button onClick={handleSideMenuClose}>閉じる</Button>
         </Box>
