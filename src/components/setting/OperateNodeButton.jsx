@@ -4,7 +4,12 @@ import { Box, Button, Typography } from "@mui/material";
 export const OperateNodeButton = ({ value, onPlusChange, onMinusChange }) => {
   return (
     <Box display="flex" padding={1}>
-      <Button onClick={onMinusChange} variant="contained" size="small">
+      <Button
+        onClick={onMinusChange}
+        variant="contained"
+        size="small"
+        disabled={value === 0}
+      >
         <DoDisturbOn />
       </Button>
       <Box
