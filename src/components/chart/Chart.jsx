@@ -64,17 +64,18 @@ export const Chart = () => {
     return (
       svgRef.current &&
       (svgRef.current === document.activeElement ||
-        svgRef.current.contains(document.activeElement)
-      ));
+        svgRef.current.contains(document.activeElement))
+    );
   };
 
   const onDelete = () => {
     deleteNode(selectNodeId);
     setSelectNodeId(null);
     closeSideMenu();
-  }
+  };
 
   const handleDelete = () => {
+    console.log(1);
     if (isNotNullOrUndefined(selectNodeId) && isSvgActive()) {
       onDelete();
     }
