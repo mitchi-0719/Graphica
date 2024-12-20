@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { GraphContext } from "../../context/graphContext/GraphContext";
 import { useContext } from "react";
 
@@ -17,8 +17,10 @@ export const GraphExportButton = () => {
   };
 
   return (
-    <Button variant="contained" size="small" onClick={handleExport}>
-      Export
-    </Button>
+    <Tooltip title="グラフのデータをJSON形式で保存する">
+      <Button variant="contained" size="small" onClick={handleExport}>
+        Export
+      </Button>
+    </Tooltip>
   );
 };
