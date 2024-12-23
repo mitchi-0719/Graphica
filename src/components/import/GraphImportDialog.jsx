@@ -7,6 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Typography,
 } from "@mui/material";
 import { Results } from "./Results";
@@ -48,7 +49,7 @@ export const GraphImportDialog = () => {
           <Typography fontSize="2rem" fontWeight="bold">
             グラフをインポート
           </Typography>
-          <Box borderBottom={1} borderColor="divider" />
+          <Divider />
         </DialogTitle>
         <DialogContent sx={{ overflow: "auto" }}>
           <JsonDescription />

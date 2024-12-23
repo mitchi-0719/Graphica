@@ -1,4 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import { Box, Button, Divider } from "@mui/material";
 
 export const NodeMenu = ({
   nodeMenuRef,
@@ -11,6 +12,7 @@ export const NodeMenu = ({
     <Box
       ref={nodeMenuRef}
       sx={{
+        width: 200,
         position: "absolute",
         top: sideMenuPosition.y,
         left: sideMenuPosition.x,
@@ -21,13 +23,18 @@ export const NodeMenu = ({
       }}
     >
       <Box>
-        <Typography variant="h5" textAlign="left">
-          Menu
-        </Typography>
-        {/* ここの下に内容を書く */}
-        <Box>
-          <Button onClick={handleSideMenuClose}>閉じる</Button>
-        </Box>
+        <Button
+          size="small"
+          variant="contained"
+          fullWidth
+          startIcon={<Delete />}
+        >
+          このノードを削除
+        </Button>
+      </Box>
+      <Divider />
+      <Box display="flex" justifyContent="flex-end">
+        <Button onClick={handleSideMenuClose}>閉じる</Button>
       </Box>
     </Box>
   );
