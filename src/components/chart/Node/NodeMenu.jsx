@@ -1,9 +1,15 @@
 import { Box, Button, Typography } from "@mui/material";
 
-export const NodeMenu = ({ isOpen, sideMenuPosition, handleSideMenuClose }) => {
+export const NodeMenu = ({
+  nodeMenuRef,
+  isOpen,
+  sideMenuPosition,
+  handleSideMenuClose,
+}) => {
   if (!isOpen) return null;
   return (
     <Box
+      ref={nodeMenuRef}
       sx={{
         position: "absolute",
         top: sideMenuPosition.y,

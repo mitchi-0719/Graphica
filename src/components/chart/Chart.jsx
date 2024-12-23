@@ -24,9 +24,10 @@ export const Chart = () => {
   } = useContext(GraphContext);
 
   const svgRef = useRef(null);
+  const nodeMenuRef = useRef(null); // NodeMenu用のref
   const { width: svgWidth, height: svgHeight } = useSvgSize(svgRef);
 
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [sideMenuVisible, setSideMenuVisible] = useState(false);
   const [sideMenuPosition, setSideMenuPosition] = useState({ x: 0, y: 0 });
 
   const moveNode = (id, x, y, r) => {
@@ -90,29 +91,30 @@ export const Chart = () => {
     e.preventDefault();
     const { clientX, clientY } = e;
     setSideMenuPosition({ x: clientX, y: clientY });
-    setSidebarVisible(true);
+    setSideMenuVisible(true);
     setSelectNodeId(id);
   };
 
   useEffect(() => {
-    const handleActionOutside = () => {
-      if (sidebarVisible) {
-        setSidebarVisible(false);
+    const handleActionOutside = (e) => {
+      // NodeMenu外をクリックした場合のみメニューを閉じる
+      if (
+        sideMenuVisible &&
+        nodeMenuRef.current &&
+        !nodeMenuRef.current.contains(e.target)
+      ) {
+        setSideMenuVisible(false);
       }
     };
-    document.addEventListener("click", handleActionOutside);
     document.addEventListener("mousedown", handleActionOutside);
-    document.addEventListener("keydown", handleActionOutside);
 
     return () => {
-      document.removeEventListener("click", handleActionOutside);
       document.removeEventListener("mousedown", handleActionOutside);
-      document.removeEventListener("keydown", handleActionOutside);
     };
-  }, [sidebarVisible]);
+  }, [sideMenuVisible]);
 
   const closeSideMenu = () => {
-    setSidebarVisible(false);
+    setSideMenuVisible(false);
   };
 
   return (
@@ -148,7 +150,8 @@ export const Chart = () => {
       </svg>
 
       <NodeMenu
-        isOpen={sidebarVisible}
+        nodeMenuRef={nodeMenuRef}
+        isOpen={sideMenuVisible}
         sideMenuPosition={sideMenuPosition}
         handleSideMenuClose={closeSideMenu}
       />
