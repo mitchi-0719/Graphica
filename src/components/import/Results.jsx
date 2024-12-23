@@ -8,7 +8,7 @@ export const Results = ({ fileName, data }) => {
   return (
     <Box marginX={2}>
       <Typography variant="h6">{fileName}</Typography>
-      <CodeBlock code={json} />
+      <CodeBlock code={json} maxHeight="500px" />
     </Box>
   );
 };

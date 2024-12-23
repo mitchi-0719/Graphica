@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 
-export const CodeBlock = ({ code }) => {
+export const CodeBlock = ({ code, maxHeight }) => {
   return (
     <Box
       sx={{
-        maxHeight: "500px",
+        maxHeight: maxHeight,
         position: "relative",
         backgroundColor: "#f5f5f5",
         color: "#000",

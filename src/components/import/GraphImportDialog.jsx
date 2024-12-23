@@ -15,6 +15,7 @@ import { setImportFileData } from "../../features/import/setImportFileData";
 import { fileImport } from "../../features/import/fileImport";
 import { GraphContext } from "../../context/graphContext/GraphContext";
 import { isEmptyObject } from "../../features/isEmptyObject";
+import { JsonDescription } from "./JsonDescription";
 
 export const GraphImportDialog = () => {
   const {
@@ -50,6 +51,7 @@ export const GraphImportDialog = () => {
           <Box borderBottom={1} borderColor="divider" />
         </DialogTitle>
         <DialogContent sx={{ overflow: "auto" }}>
+          <JsonDescription />
           <FileDropAndClickZone
             onChange={(e) => setImportFileData(e, setImportData, setFileName)}
           />
