@@ -97,7 +97,6 @@ export const Chart = () => {
 
   useEffect(() => {
     const handleActionOutside = (e) => {
-      // NodeMenu外をクリックした場合のみメニューを閉じる
       if (
         sideMenuVisible &&
         nodeMenuRef.current &&
