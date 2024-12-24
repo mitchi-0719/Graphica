@@ -21,9 +21,9 @@ export const ArrangeBinaryTreeButton = () => {
       const y = level * levelHeight + 50;
       positions.push({ id: node.id, x, y });
 
-      calculatePosition(2 * index + 1, level + 1, x - width / 2, width / 2);
+      calculatePosition(2 * index + 1, level + 1, x - width / 3, width / 3);
 
-      calculatePosition(2 * index + 2, level + 1, x + width / 2, width / 2);
+      calculatePosition(2 * index + 2, level + 1, x + width / 3, width / 3);
     };
 
     calculatePosition(0, 0, rootX, treeWidth - marginX);
@@ -42,7 +42,7 @@ export const ArrangeBinaryTreeButton = () => {
           size="small"
           disabled={nodes.length === 0}
         >
-          完全二分木の配置にする
+          完全二分木の配置
         </Button>
       </Box>
     </Box>

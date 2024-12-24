@@ -15,15 +15,13 @@ import {
 } from "../../hooks/nullOrUndefined";
 
 export const OperateEdgeButton = () => {
-  const { nodes, addEdge, deleteEdge, selectEdgeId } = useContext(GraphContext);
-  const [source, setSource] = useState("");
+  const { nodes, selectNodeId, nodesMap, addEdge, deleteEdge, selectEdgeId } = useContext(GraphContext);
   const [target, setTarget] = useState("");
 
   const handleAddClick = () => {
-    isNotNullOrUndefined(source) &&
-      isNotNullOrUndefined(target) &&
-      source !== target &&
-      addEdge({ source, target });
+    isNotNullOrUndefined(target) &&
+      selectNodeId !== target &&
+      addEdge({ source: selectNodeId, target });
   };
 
   const handleDeleteClick = () => {
@@ -34,22 +32,8 @@ export const OperateEdgeButton = () => {
     <Box>
       <Typography variant="h7">エッジの追加</Typography>
       <Box display="flex" flexDirection="row" flex={1}>
-        <FormControl fullWidth>
-          <InputLabel id="source-select">Source</InputLabel>
-          <Select
-            labelId="source-select"
-            id="demo-simple-select"
-            value={source}
-            label="Age"
-            onChange={(e) => setSource(e.target.value)}
-          >
-            {nodes.map((node) => (
-              <MenuItem value={node.id} key={node.id}>
-                {node.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Typography>{isNotNullOrUndefined(selectNodeId) && nodes[nodesMap[selectNodeId]].label}</Typography>
+
         <FormControl fullWidth>
           <InputLabel id="target-select">target</InputLabel>
           <Select
