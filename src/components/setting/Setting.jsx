@@ -10,7 +10,6 @@ import { ModeToggleButton } from "./ModeToggleButton";
 import { isNullOrUndefined } from "../../hooks/nullOrUndefined";
 import { ArrangeBinaryTreeButton } from "./ArrangeBinaryTreeButton";
 
-
 export const Setting = () => {
   const { nodes, addNode, deleteNode, selectEdgeId, subdivision, contraction } =
     useContext(GraphContext);
@@ -66,11 +65,9 @@ export const Setting = () => {
           >
             縮約
           </Button>
-
-          <ArrangeBinaryTreeButton />
         </Box>
       </Box>
+      <ArrangeBinaryTreeButton />
     </Box>
-
   );
 };
