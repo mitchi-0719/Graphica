@@ -15,7 +15,8 @@ import {
 } from "../../hooks/nullOrUndefined";
 
 export const OperateEdgeButton = () => {
-  const { nodes, selectNodeId, nodesMap, addEdge, deleteEdge, selectEdgeId } = useContext(GraphContext);
+  const { nodes, selectNodeId, nodesMap, addEdge, deleteEdge, selectEdgeId } =
+    useContext(GraphContext);
   const [target, setTarget] = useState("");
 
   const handleAddClick = () => {
@@ -28,15 +29,14 @@ export const OperateEdgeButton = () => {
     deleteEdge(selectEdgeId);
   };
 
-  const handleDownload = () => {
-    downloadSvgAsImage(svgRef, "png");
-  };
-
   return (
     <Box>
       <Typography variant="h7">エッジの追加</Typography>
       <Box display="flex" flexDirection="row" flex={1}>
-        <Typography>{isNotNullOrUndefined(selectNodeId) && nodes[nodesMap[selectNodeId]].label}</Typography>
+        <Typography>
+          {isNotNullOrUndefined(selectNodeId) &&
+            nodes[nodesMap[selectNodeId]].label}
+        </Typography>
 
         <FormControl fullWidth>
           <InputLabel id="target-select">target</InputLabel>
