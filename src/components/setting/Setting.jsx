@@ -9,8 +9,9 @@ import { OperateNodeButton } from "./OperateNodeButton";
 import { ModeToggleButton } from "./ModeToggleButton";
 import { isNullOrUndefined } from "../../hooks/nullOrUndefined";
 import { ArrangeBinaryTreeButton } from "./ArrangeBinaryTreeButton";
+import { ImageDownloadButton } from "./ImageDownloadButton";
 
-export const Setting = () => {
+export const Setting = ({ svgRef }) => {
   const { nodes, addNode, deleteNode, selectEdgeId, subdivision, contraction } =
     useContext(GraphContext);
   const isSmallDevice = useIsSmallDevice();
@@ -68,6 +69,7 @@ export const Setting = () => {
         </Box>
       </Box>
       <ArrangeBinaryTreeButton />
+      <ImageDownloadButton svgRef={svgRef} />
     </Box>
   );
 };

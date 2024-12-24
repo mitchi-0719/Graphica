@@ -14,8 +14,6 @@ import {
   isNullOrUndefined,
 } from "../../hooks/nullOrUndefined";
 
-import { downloadSvgAsImage } from "../chart/Chart";
-
 export const OperateEdgeButton = () => {
   const { nodes, selectNodeId, nodesMap, addEdge, deleteEdge, selectEdgeId } = useContext(GraphContext);
   const [target, setTarget] = useState("");
@@ -64,8 +62,6 @@ export const OperateEdgeButton = () => {
       >
         エッジを削除
       </Button>
-
-      <button onClick={handleDownload}>Download</button>
     </Box>
   );
 };
