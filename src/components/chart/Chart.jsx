@@ -64,7 +64,9 @@ export const Chart = () => {
     return (
       svgRef.current &&
       (svgRef.current === document.activeElement ||
-        svgRef.current.contains(document.activeElement))
+        svgRef.current.contains(document.activeElement) ||
+        nodeMenuRef.current === document.activeElement ||
+        nodeMenuRef.current.contains(document.activeElement))
     );
   };
 
@@ -153,6 +155,7 @@ export const Chart = () => {
         isOpen={sideMenuVisible}
         sideMenuPosition={sideMenuPosition}
         handleSideMenuClose={closeSideMenu}
+        handleDelete={handleDelete}
       />
     </Box>
   );

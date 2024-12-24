@@ -7,6 +7,7 @@ export const NodeMenu = ({
   isOpen,
   sideMenuPosition,
   handleSideMenuClose,
+  handleDelete,
 }) => {
   if (!isOpen) return null;
 
@@ -38,6 +39,7 @@ export const NodeMenu = ({
           variant="contained"
           fullWidth
           startIcon={<Delete />}
+          onClick={handleDelete}
         >
           このノードを削除
         </Button>
