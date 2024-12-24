@@ -64,17 +64,19 @@ export const Chart = () => {
     return (
       svgRef.current &&
       (svgRef.current === document.activeElement ||
-        svgRef.current.contains(document.activeElement) ||
-        nodeMenuRef.current === document.activeElement ||
-        nodeMenuRef.current.contains(document.activeElement))
-    );
+        svgRef.current.contains(document.activeElement)
+      ));
   };
+
+  const onDelete = () => {
+    deleteNode(selectNodeId);
+    setSelectNodeId(null);
+    closeSideMenu();
+  }
 
   const handleDelete = () => {
     if (isNotNullOrUndefined(selectNodeId) && isSvgActive()) {
-      deleteNode(selectNodeId);
-      setSelectNodeId(null);
-      closeSideMenu();
+      onDelete();
     }
   };
 
@@ -155,7 +157,7 @@ export const Chart = () => {
         isOpen={sideMenuVisible}
         sideMenuPosition={sideMenuPosition}
         handleSideMenuClose={closeSideMenu}
-        handleDelete={handleDelete}
+        onDelete={onDelete}
       />
     </Box>
   );
