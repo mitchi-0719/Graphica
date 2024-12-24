@@ -4,7 +4,6 @@ import { LabelChangeField } from "../../setting/LabelChangeField";
 import { ColorPalette } from "../../setting/ColorPalette";
 import { OperateEdgeButton } from "../../setting/OperateEdgeButton";
 
-
 export const NodeMenu = ({
   nodeMenuRef,
   isOpen,
@@ -29,22 +28,19 @@ export const NodeMenu = ({
       }}
     >
       <Box mb={2}>
-        <Typography variant="subtitle1" gutterBottom>
-        </Typography>
+        <Typography variant="subtitle1" gutterBottom></Typography>
         <LabelChangeField />
       </Box>
 
       <Divider sx={{ marginY: 2 }} />
 
       <Box mb={2}>
-        <Typography variant="subtitle1" gutterBottom>
-        </Typography>
+        <Typography variant="subtitle1" gutterBottom></Typography>
         <ColorPalette />
       </Box>
 
       <Box mb={2}>
-        <Typography variant="subtitle1" gutterBottom>
-        </Typography>
+        <Typography variant="subtitle1" gutterBottom></Typography>
         <OperateEdgeButton />
       </Box>
 

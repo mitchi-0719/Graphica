@@ -7,7 +7,7 @@ import { GraphContext } from "../../context/graphContext/GraphContext";
 import { isNotNullOrUndefined } from "../../hooks/nullOrUndefined";
 import { NodeMenu } from "./Node/NodeMenu";
 
-export const Chart = () => {
+export const Chart = ({ svgRef }) => {
   const {
     nodes,
     edges,
@@ -23,7 +23,6 @@ export const Chart = () => {
     isDrawEdgeMode,
   } = useContext(GraphContext);
 
-  const svgRef = useRef(null);
   const nodeMenuRef = useRef(null); // NodeMenu用のref
   const { width: svgWidth, height: svgHeight } = useSvgSize(svgRef);
 
@@ -64,17 +63,18 @@ export const Chart = () => {
     return (
       svgRef.current &&
       (svgRef.current === document.activeElement ||
-        svgRef.current.contains(document.activeElement)
-      ));
+        svgRef.current.contains(document.activeElement))
+    );
   };
 
   const onDelete = () => {
     deleteNode(selectNodeId);
     setSelectNodeId(null);
     closeSideMenu();
-  }
+  };
 
   const handleDelete = () => {
+    console.log(1);
     if (isNotNullOrUndefined(selectNodeId) && isSvgActive()) {
       onDelete();
     }
@@ -128,7 +128,7 @@ export const Chart = () => {
         height="100%"
         tabIndex={0}
         onDoubleClick={handleDoubleClick}
-        style={{ clickEvent: "none", outline: "none" }}
+        style={{ clickEvent: "none", outline: "none", background: "white" }}
       >
         {edges.map((edge, i) => (
           <Edge
@@ -151,7 +151,6 @@ export const Chart = () => {
           />
         ))}
       </svg>
-
       <NodeMenu
         nodeMenuRef={nodeMenuRef}
         isOpen={sideMenuVisible}

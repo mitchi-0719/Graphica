@@ -28,6 +28,10 @@ export const OperateEdgeButton = () => {
     deleteEdge(selectEdgeId);
   };
 
+  const handleDownload = () => {
+    downloadSvgAsImage(svgRef, "png");
+  };
+
   return (
     <Box>
       <Typography variant="h7">エッジの追加</Typography>
