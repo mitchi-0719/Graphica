@@ -15,7 +15,7 @@ export const CodeBlock = ({ code, maxHeight }) => {
         border: "1px solid lightgray",
       }}
     >
-      <pre style={{ margin: 0 }}>
+      <pre style={{ margin: 0, fontSize: "12px" }}>
         <code>{`${code}`}</code>
       </pre>
     </Box>
